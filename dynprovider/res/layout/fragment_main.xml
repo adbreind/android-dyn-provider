@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.selfmummy.dynprovider.MainActivity$PlaceholderFragment" >
+
+    <TextView
+        android:id="@+id/textHello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" />
+
+    <Button
+        android:id="@+id/butRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textHello"
+        android:layout_below="@+id/textHello"
+        android:layout_marginTop="18dp"
+        android:text="@string/read_all" />
+
+    <EditText
+        android:id="@+id/editMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/butRead"
+        android:layout_below="@+id/butRead"
+        android:layout_marginTop="20dp"
+        android:ems="10" 
+        android:hint="@string/message_hint">
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/butWrite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editMessage"
+        android:layout_alignBottom="@+id/editMessage"
+        android:layout_toRightOf="@+id/editMessage"
+        android:text="@string/write" />
+
+</RelativeLayout>

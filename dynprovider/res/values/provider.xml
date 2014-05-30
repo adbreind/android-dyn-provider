@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>  	    
+    <string name="p_authority">com.selfmummy.dynprovider</string>
+	<string name="p_entity">dummy</string>
+	<string name="p_mime_minor">vnd.selfmummy.dummy</string>
+	<string-array name="p_field_names">
+	    <item>time</item>
+	    <item>message</item>
+	</string-array>
+	<string-array name="p_field_types">
+	    <item>integer</item>
+	    <item>text</item>
+	</string-array>
+</resources>
