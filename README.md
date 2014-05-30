@@ -40,7 +40,8 @@ It's entirely driven off of a resource file included in the app (package) to whi
 
 For any particular project, plug in: 
 
-* an authority; an entity name (like "customer" or "restaurant")
+* an authority
+* an entity name (like "customer" or "restaurant")
 * field names
 	* an autoincrementing integer ID that maps to BaseColumns._ID for use in lists is automatically included
 * field types 
