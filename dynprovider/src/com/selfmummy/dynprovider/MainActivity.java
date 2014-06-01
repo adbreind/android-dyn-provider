@@ -4,6 +4,7 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -77,7 +78,7 @@ public class MainActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {        	
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_main, container, false);           
             
             rootView.findViewById(R.id.butRead).setOnClickListener(new OnClickListener() {
 				
@@ -97,9 +98,62 @@ public class MainActivity extends Activity {
 					ContentValues values = new ContentValues();
 					values.put(fields[FIELD_MESSAGE], editMessage.getText().toString());
 					values.put(fields[FIELD_TIME], new Date().getTime());
-					getActivity().getContentResolver().insert(allEntitiesUri, values);
+					Uri newUri = getActivity().getContentResolver().insert(allEntitiesUri, values);
+					Log.d(TAG, "Inserted record at " + newUri);
+				}
+			});            
+            
+            rootView.findViewById(R.id.butRead1).setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {								
+					String rawId = ((EditText)rootView.findViewById(R.id.editId)).getText().toString();			        
+			        Uri individualRecUri = ContentUris.withAppendedId(allEntitiesUri, Long.parseLong(rawId));
+					Cursor c = getActivity().getContentResolver().query(individualRecUri, null, null, null, null);
+					if (c.getCount() == 0)
+						Log.d(TAG, "Record not found");
+					else {
+						c.moveToFirst();
+						Log.d(TAG, "Message field is " + c.getString(c.getColumnIndex(fields[FIELD_MESSAGE])));
+					}
 				}
 			});
+            
+            rootView.findViewById(R.id.butDelete).setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {								
+					String rawId = ((EditText)rootView.findViewById(R.id.editId)).getText().toString();			        
+			        Uri individualRecUri = ContentUris.withAppendedId(allEntitiesUri, Long.parseLong(rawId));
+					int deleted = getActivity().getContentResolver().delete(individualRecUri, null, null);
+					if (deleted == 0)
+						Log.d(TAG, "Record not found or delete failed");
+					else {						
+						Log.d(TAG, "Record deleted from " + individualRecUri);
+					}
+				}
+			});
+            
+            rootView.findViewById(R.id.butUpdate).setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {								
+					String rawId = ((EditText)rootView.findViewById(R.id.editId)).getText().toString();												
+			        Uri individualRecUri = ContentUris.withAppendedId(allEntitiesUri, Long.parseLong(rawId));
+			        
+			        ContentValues values = new ContentValues();
+					values.put(fields[FIELD_MESSAGE], editMessage.getText().toString());
+					values.put(fields[FIELD_TIME], new Date().getTime());
+			        					
+					int updated = getActivity().getContentResolver().update(individualRecUri, values, null, null);
+					if (updated == 0)
+						Log.d(TAG, "Record not found or update failed");
+					else {						
+						Log.d(TAG, "Record updated at " + individualRecUri);
+					}
+				}
+			});
+            
             
             return rootView;
         }

@@ -45,4 +45,43 @@
         android:layout_toRightOf="@+id/editMessage"
         android:text="@string/write" />
 
+    <EditText
+        android:id="@+id/editId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editMessage"
+        android:layout_below="@+id/butWrite"
+        android:layout_marginTop="22dp"
+        android:layout_toLeftOf="@+id/butRead1"
+        android:ems="10"
+        android:hint="@string/hint_id"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/butUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editId"
+        android:layout_alignBottom="@+id/editId"
+        android:layout_toLeftOf="@+id/butDelete"
+        android:text="@string/update" />
+
+    <Button
+        android:id="@+id/butDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/butUpdate"
+        android:layout_alignBottom="@+id/butUpdate"
+        android:layout_alignLeft="@+id/butWrite"
+        android:text="@string/delete" />
+
+    <Button
+        android:id="@+id/butRead1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editId"
+        android:layout_alignBottom="@+id/editId"
+        android:layout_toLeftOf="@+id/butUpdate"
+        android:text="@string/read_one" />
+
 </RelativeLayout>

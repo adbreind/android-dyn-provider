@@ -72,7 +72,7 @@ public class DbAdapter extends SQLiteOpenHelper {
     public Cursor getAll(String sortOrder) {
         return getReadableDatabase().query(mTable, null, null, null, null, null, sortOrder);
     }
-
+    
     /*
     public Cursor getAllWithColumnMap() {
         SQLiteDatabase db = getReadableDatabase();
@@ -82,4 +82,19 @@ public class DbAdapter extends SQLiteOpenHelper {
         return builder.query(db, null, null, null, null, null, COL_TIME + " DESC");
     }
     */
+    
+    public Cursor get(long id) {
+    	return getReadableDatabase().query(mTable, null, COL_ID + " = ?", new String[] { Long.toString(id) }, null, null, null);
+    }
+
+	public int delete(long id) {
+		SQLiteDatabase db = getWritableDatabase();
+		return db.delete(mTable, COL_ID + "= ?", new String[] { Long.toString(id) });		
+	}
+
+	public int update(long id, ContentValues values) {
+		SQLiteDatabase db = getWritableDatabase();
+		return db.update(mTable, values, COL_ID + "= ?", new String[] { Long.toString(id) });		
+	}
+   
 }

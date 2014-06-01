@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -104,8 +103,10 @@ public class DynProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Implement this to handle requests to delete one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+    	int count = mAdapter.delete(ContentUris.parseId(uri));
+    	getContext().getContentResolver().notifyChange(uri, null); // change in record
+    	getContext().getContentResolver().notifyChange(removeId(uri), null); // change in collection
+        return count;        
     }
 
     @Override
@@ -141,7 +142,14 @@ public class DynProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
             String[] selectionArgs, String sortOrder) {
-        Cursor c = mAdapter.getAll(sortOrder);
+    	int selectionType = sUriMatcher.match(uri);
+    	Cursor c;
+    	if (selectionType==URI_MULTIPLE_ENTRY)
+    		c = mAdapter.getAll(sortOrder);
+    	else if (selectionType==URI_SINGLE_ENTRY)
+    		c = mAdapter.get(ContentUris.parseId(uri));
+    	else
+    		throw new IllegalArgumentException("URI format for query unrecognized by provider");
         c.setNotificationUri(getContext().getContentResolver(), uri);
         return c;
     }
@@ -149,7 +157,15 @@ public class DynProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
             String[] selectionArgs) {
-        // TODO: Implement this to handle requests to update one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+    	int count = mAdapter.update(ContentUris.parseId(uri), values);        
+        getContext().getContentResolver().notifyChange(uri, null); // change in record
+    	getContext().getContentResolver().notifyChange(removeId(uri), null); // change in collection
+        return count;
+    }
+    
+    private Uri removeId(Uri uri) {
+    	String str = uri.toString();
+    	int index = str.lastIndexOf("/");
+    	return Uri.parse(str.substring(0,index));
     }
 }
