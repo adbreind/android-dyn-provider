@@ -1,7 +1,7 @@
 android-dyn-provider
 ====================
 
-####Configurable/dynamic Android Content Provider implementation
+#### Configurable/dynamic Android Content Provider implementation
 
 It would be nice to gain the benefits of Content Providers without writing all of the boilerplate code...
 
@@ -47,7 +47,7 @@ For any particular project, plug in:
 * field types 
 	* these are SQLite-compatible SQL types for now
 
-####Roadmap
+#### Roadmap
 
 If time allows, there are a ton of minor and major features that desperately ought to be added here :)
 
